@@ -57,10 +57,13 @@
     </style>
 </head>
 <body>
+    {% load static %}
+
     <div>
         <nav id="navbar">
             <div id="logo">
-                <img src="/static/images/FYP Logo.png/" alt="Student Sphere Logo">
+                <!-- <img src="/static/images/FYP Logo.png/" alt="Student Sphere Logo"> -->
+                  <img src="{% static 'images/FYP Logo.png' %}" alt="Student Sphere Logo">
             </div>
             <span class="menu-toggle" onclick="toggleMenu()">☰</span>
             <ul>
@@ -77,17 +80,20 @@
         <h2>Select your role to login</h2><br><br>
         <div id="home-buttons" class="Login-button">
             <div>
-                <img src="/static/images/Admin btn.jpg/" class="image"><br>
+                <!-- <img src="/static/images/Admin btn.jpg/" class="image"><br> -->
+                  <img src="{% static 'images/Admin btn.jpg' %}" class="image"><br>
                 <p>As an Admin, you have full access to manage<br> the entire portal. You can add students, assign<br> courses, manage staff.</p><br>
                 <a href="/login?role=Admin" class="btn">Admin Login</a>
             </div>
             <div>
-                <img src="/static/images/Teacher btn.jpg/" class="image"><br>
+                <!-- <img src="/static/images/Teacher btn.jpg/" class="image"><br> -->
+                  <img src="{% static 'images/Teacher btn.jpg' %}" class="image"><br>
                 <p>As a Teacher, you can manage your courses, take <br>attendance, and access chatbot or students<br> assignments.</p><br>
                 <a href="/login?role=Teacher" class="btn">Teacher Login</a>
             </div>
             <div>
-                <img src="/static/images/Student btn.png/" class="image"><br>
+                <!-- <img src="/static/images/Student btn.png/" class="image"><br> -->
+                  <img src="{% static 'images/Student btn.png' %}" class="image"><br>
                 <p>As a Student, you can view your courses, track <br>your attendance, access chatbot, and check Google <br>Classroom links for assignments</p><br>
                 <a href="/login?role=Student" class="btn">Student Login</a>
             </div>
