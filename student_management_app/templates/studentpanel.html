@@ -93,6 +93,7 @@
 </head>
 
 <body>
+    {% load static %}
     {% if messages %}
     {% for message in messages %}
         <div class="alert alert-success">
@@ -122,7 +123,7 @@
                 </div>
                 <div class="user">
                     <div id="notification-area">
-                        <img src="/static/images/notifications.png/" alt="Notifications" id="notification-icon">
+                        <img src="{% static 'images/notifications.png' %}" alt="Notifications" id="notification-icon">
                         <span id="notification-badge"></span>
                         <div id="notification-dropdown">
                             <div id="notification-list">
@@ -144,7 +145,7 @@
                         <h2>My Courses</h2>
                     </div>
                     <div class="icon-case">
-                        <img src="/static/images/Students.png/" alt="Students Icon">
+                        <img src="{% static 'images/Students.png' %}" alt="Students Icon">
                     </div>
                 </div>
                 <div class="card">
@@ -152,7 +153,7 @@
                         <h2>Google Classroom</h2>
                     </div>
                     <div class="icon-case">
-                        <img src="/static/images/Teachers.png/" alt="Teachers Icon">
+                        <img src="{% static 'images/Teachers.png' %}" alt="Teachers Icon">
                     </div>
                 </div>
                 <div class="card">
@@ -160,7 +161,7 @@
                         <h2>Timetable</h2>
                     </div>
                     <div class="icon-case">
-                        <img src="/static/images/Timetable.png/" alt="Timetable Icon">
+                        <img src="{% static 'images/Timetable.png' %}"alt="Timetable Icon">
                     </div>
                 </div>
                 <div class="card">
@@ -168,7 +169,7 @@
                         <h2>Attendance</h2>
                     </div>
                     <div class="icon-case">
-                        <img src="/static/images/Attendance.png/" alt="Attendance Icon">
+                        <img src="{% static 'images/Attendance.png' %}" alt="Attendance Icon">
                     </div>
                 </div>
             </div>

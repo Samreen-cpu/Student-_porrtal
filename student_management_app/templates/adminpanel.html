@@ -222,6 +222,7 @@
   </style>
 </head>
 <body>
+  {% load static %}
   <div class="side-menu">
     <br><br>
     <div class="fyp-name">
@@ -246,7 +247,7 @@
         <div class="search"></div>
         <div class="user" id="notifications-container">
           <div style="position: relative;">
-            <img src="/static/images/notifications.png/" alt="Notifications" id="notifications-icon" style="cursor: pointer; width: 30px; height: 30px;">
+            <img src="{% static 'images/notifications.png' %}" alt="Notifications" id="notifications-icon" style="cursor: pointer; width: 30px; height: 30px;">
             {% if unread_messages_count > 0 %}
               <span id="notification-badge">{{ unread_messages_count }}</span>
             {% endif %}
@@ -287,10 +288,10 @@
       <h1> Welcome to the Admin Dashboard </h1>
       <div id="chatbot-container-admin"></div>
       <div class="cards">
-        <div class="card"><div class="box"><h2>Students</h2></div><div class="icon-case"><img src="/static/images/Students.png/" alt=""></div></div>
-        <div class="card"><div class="box"><h2>Teacher</h2></div><div class="icon-case"><img src="/static/images/Teachers.png/" alt=""></div></div>
-        <div class="card"><div class="box"><h2>Timetable</h2></div><div class="icon-case"><img src="/static/images/Timetable.png/" alt=""></div></div>
-        <div class="card"><div class="box"><h2>Attendance</h2></div><div class="icon-case"><img src="/static/images/Attendance.png/" alt=""></div></div>
+        <div class="card"><div class="box"><h2>Students</h2></div><div class="icon-case"><img src="{% static 'images/Students.png' %}" alt=""></div></div>
+        <div class="card"><div class="box"><h2>Teacher</h2></div><div class="icon-case"><img src="{% static 'images/Teachers.png' %}" alt=""></div></div>
+        <div class="card"><div class="box"><h2>Timetable</h2></div><div class="icon-case"><img src="{% static 'images/Timetable.png' %}" alt=""></div></div>
+        <div class="card"><div class="box"><h2>Attendance</h2></div><div class="icon-case"><img src="{% static 'images/Attendance.png' %}" alt=""></div></div>
       </div>
     </div>
   </div>
