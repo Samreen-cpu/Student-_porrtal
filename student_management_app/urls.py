@@ -30,4 +30,7 @@ urlpatterns = [
     path('admin_dashboard/', views.admin_dashboard, name='admin_dashboard'),
     path('api/notifications/', views.get_notifications, name='get_notifications'),
     path('api/notifications/mark_read/', views.mark_notifications_read, name='mark_notifications_read'),
+    path('forgot_password/', views.forgot_password, name='forgot_password'),
+    path('reset_password/<uidb64>/<token>/', views.reset_password, name='reset_password'),
+
 ]

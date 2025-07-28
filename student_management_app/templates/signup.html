@@ -7,7 +7,8 @@
     <title>Signup</title>
     <link rel="stylesheet" href="/static/css/style.css">
   <style>
-   body {
+
+   /* body {
       margin: 0;
       padding: 0;
       height: 90vh;
@@ -43,10 +44,86 @@
     border-radius: 5px;
     padding: 6px;
     width: 250px;
-} 
+}  */
+   body {
+      margin: 0;
+      padding: 0;
+      min-height: 100vh; /* flexible height */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: url('/static/images/Bg_3.png') no-repeat center center / cover;
+      font-family: Arial, sans-serif;
+    }
+
+    .signup-form {
+      justify-content: center;
+      background: #003366;
+      padding: 40px;
+      border-radius: 10px;
+      width: 400px;
+      color: white;
+      font-size: larger;
+      box-sizing: border-box;
+    }
+
+    .signup-form h1 {
+      margin-top: 0;
+      text-align: center;
+    }
+
+    .signup-form button {
+      background: white;
+      color: #003366;
+      border: none;
+      padding: 10px;
+      font-size: large;
+      cursor: pointer;
+      border-radius: 5px;
+      width: 100%;
+    }
+
+    #username, #email, #password, #verification_code, #semester {
+      border-radius: 5px;
+      padding: 8px;
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    /* ✅ Tablet Responsive */
+    @media (max-width: 768px) {
+      .signup-form {
+        width: 80%;
+        padding: 25px;
+      }
+    }
+
+    /* ✅ Mobile Responsive */
+    @media (max-width: 480px) {
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .signup-form {
+        width: 90%;
+        margin: 0 auto;   /* Center horizontally */
+        padding: 20px;
+        font-size: medium;
+      }
+      .signup-form h1 {
+        font-size: 22px;
+      }
+      .signup-form p {
+        font-size: 14px;
+        text-align: center;
+      }
+    }
+  </style>
 </style>
 </head>
 <body>
+  
 
 {% if messages %}
     {% for message in messages %}

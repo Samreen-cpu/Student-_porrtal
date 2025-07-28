@@ -169,7 +169,7 @@
 }
 
 /* Login FORM */
-#login-container{
+/* #login-container{
     background-size: cover; 
     height: 650px;
     justify-items: center;
@@ -206,7 +206,97 @@
     border-radius: 5px;
     padding: 6px;
     width: 250px;
-} 
+}  */
+/* ✅ Ensure full height for flex */
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
+/* ✅ Container (Centers Form) */
+#login-container {
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    min-height: 100vh; /* Full height */
+    width: 100%;
+}
+
+/* ✅ Form Styling */
+.login-form {
+    background: #003366;
+    padding: 40px;
+    border-radius: 10px;
+    width: 400px;
+    color: white;
+    font-size: larger;
+    box-sizing: border-box;
+}
+
+/* ✅ Button */
+.login-form button {
+    background: white;
+    color: #003366;
+    border: none;
+    padding: 10px;
+    font-size: large;
+    cursor: pointer;
+    border-radius: 5px;
+    width: 100%;
+}
+
+.login-form a {
+    color: white;
+    text-decoration: none;
+}
+.login-form a:hover {
+    color: lightgray;
+}
+
+/* ✅ Inputs */
+#username, #email, #password, #verification_code {
+    border-radius: 5px;
+    padding: 10px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* ✅ Tablet */
+@media (max-width: 768px) {
+    .login-form {
+        width: 80%;
+        padding: 25px;
+        font-size: medium;
+    }
+}
+
+/* ✅ Mobile */
+@media (max-width: 480px) {
+    .login-form {
+        width: 90%;
+        padding: 20px;
+        font-size: medium;
+    }
+    .login-form h1 {
+        font-size: 22px;
+        text-align: center;
+    }
+    .login-form p {
+        font-size: 14px;
+        text-align: center;
+    }
+    .login-form button {
+        font-size: 16px;
+        padding: 10px;
+    }
+}
+
 
 /* Success/Error message styles */
 .message {

@@ -77,7 +77,7 @@ def login_view(request):
 
             login(request, user)
             request.session['role'] = user.role
-            print(f"🔓 Logged in as: {user.username}, Role: {user.role}")
+            print(f"Logged in as: {user.username}, Role: {user.role}")
 
             # Redirect by role
             if user.role.lower() == 'student':
@@ -151,7 +151,8 @@ def signup_view(request):
         login(request, user)
         print(f"🔍 User {username} logged in with ID: {request.session.get('_auth_user_id')}")
         print(f"🔍 Role assigned: {user.role}")
-        messages.success(request, '🎉 Account created successfully!')
+        messages.success(request, 'Account created successfully!')
+        return render(request, 'signup.html', {'role': role, 'redirect_to': user.role})
 
         # Check the role and redirect to the correct dashboard
         if user.role == 'student':
@@ -500,16 +501,12 @@ from .models import Timetable, Teacher, Notification
 from django.http import JsonResponse
 
 
-# ... your existing admin timetable view ...
-
-@user_passes_test(lambda u: u.is_superuser)  # Example: Only admin can save timetable
+@user_passes_test(lambda u: u.is_superuser)  
 def save_timetable_view(request):
     if request.method == 'POST':
-        # ... your logic to save the timetable ...
-        # After saving, identify affected teachers and create notifications
         affected_teachers = Teacher.objects.filter(
-            subject_taught__in=[])  # Example: Filter teachers by taught subjects
-        semester = request.POST.get('semester')  # Example: Get the affected semester
+            subject_taught__in=[])  
+        semester = request.POST.get('semester')  
 
         for teacher in affected_teachers:
             Notification.objects.create(
@@ -517,7 +514,7 @@ def save_timetable_view(request):
                 message=f"Timetable updated for Semester {semester}.",
                 related_semester=int(semester) if semester else None
             )
-        # Optionally send a real-time notification using Django Channels
+        
 
         return JsonResponse(
             {'success': True, 'message': 'Timetable saved and notifications sent.'})
@@ -558,7 +555,7 @@ from django.db.models import Q
 from .models import StudentProfile
 
 
-def student_list(request):  # Make sure this function exists and is named correctly
+def student_list(request):  
     students = StudentProfile.objects.all()
     search_term = request.GET.get('search')
     sort_by = request.GET.get('sort')
@@ -616,7 +613,6 @@ def student_edit(request, pk):
         form = StudentProfileForm(request.POST, instance=student_profile)
         if form.is_valid():
             form.save()
-            #  messages.success(request, f"{user.username}'s profile updated successfully!") # Removed import
             return redirect('student_list')
     else:
         form = StudentProfileForm(instance=student_profile)
@@ -636,46 +632,79 @@ def student_delete(request, pk):
     except Http404:
         messages.error(request, "Student not found!")
         return redirect('student_list')
-# student_management_app/views.py
+
 
 from django.shortcuts import render
-# You might have other imports here, e.g., for models, forms, etc.
-# from .models import Teacher, Course, Assignment # Example if you use Django ORM
+
 
 def admin_courses(request):
     """
     Renders the page for managing teacher courses.
     This view will serve the HTML content that uses Firestore for data management.
     """
-    # In a real Django application, you might fetch initial data from your Django models
-    # and pass it to the template context if needed.
-    # For this Firestore-based page, most data loading happens on the client-side.
-
-    # Example of passing context (optional, adjust as per your Django setup)
+   
     context = {
         'page_title': 'Manage Teacher Courses',
-        # 'teachers_data': Teacher.objects.all(), # Example if fetching from Django DB
     }
     return render(request, 'Manage_Teacher_Courses.html', context)
 
-# Add other view functions you might have here, e.g.:
-# def student_list(request):
-#     return render(request, 'student_list.html')
 
-# def teacher_list(request):
-#     return render(request, 'teacher_list.html')
+from student_management_app.models import UserProfile  
+from django.utils.http import urlsafe_base64_encode
+from django.utils.encoding import force_bytes
+from django.contrib.auth.tokens import default_token_generator
+from django.core.mail import send_mail
 
-# def admin_timetable(request):
-#     return render(request, 'admin_timetable.html')
+def forgot_password(request):
+    if request.method == 'POST':
+        email = request.POST['email']
+        try:
+            # Use UserProfile here instead of the default User model
+            user = UserProfile.objects.get(email=email) 
+            uid = urlsafe_base64_encode(force_bytes(user.pk))
+            token = default_token_generator.make_token(user)
+            reset_link = f"http://127.0.0.1:8000/reset_password/{uid}/{token}/"
 
-# def delete_message(request, message_id):
-#     # Implement your message deletion logic here
-#     # This would typically involve interacting with your Django models
-#     # For now, a placeholder response:
-#     from django.http import JsonResponse
-#     if request.method == 'POST':
-#         # Simulate deletion success
-#         return JsonResponse({'status': 'success', 'message': f'Message {message_id} deleted.'})
-#     return JsonResponse({'status': 'error', 'message': 'Invalid request method.'}, status=400)
+            # Send the reset email
+            send_mail(
+                'Reset Your Password',
+                f'Click this link to reset your password: {reset_link}',
+                'noreply@example.com', 
+                [email],
+                fail_silently=False,
+            )
+            messages.success(request, 'Reset link has been sent to your email.')
+        except UserProfile.DoesNotExist:
+            # If no user is found with the given email, show an error message
+            messages.error(request, 'No user found with this email.')
 
+    return render(request, 'forgot_password.html')
 
+from django.utils.http import urlsafe_base64_decode
+
+def reset_password(request, uidb64, token):
+    try:
+        uid = urlsafe_base64_decode(uidb64).decode()
+        user = UserProfile.objects.get(pk=uid)
+    except (TypeError, ValueError, OverflowError, UserProfile.DoesNotExist):
+        user = None
+
+    if user and default_token_generator.check_token(user, token):
+        if request.method == 'POST':
+            password1 = request.POST['password1']
+            password2 = request.POST['password2']
+
+            if password1 == password2:
+                user.set_password(password1)
+                user.save()
+                messages.success(request, " Password has been reset successfully. You can now log in.")
+                return render(request, 'reset_password.html')
+            else:
+                messages.error(request, " Passwords do not match.")
+                return render(request, 'reset_password.html')
+
+        # GET request → simply render form
+        return render(request, 'reset_password.html')
+    else:
+        messages.error(request, "Invalid or expired link.")
+        return redirect('forgot_password')

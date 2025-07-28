@@ -149,3 +149,11 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 CSRF_TRUSTED_ORIGINS = [
     "https://web-production-5c0e.up.railway.app"  # Replace with yours
 ]
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'studentsphere.noreply@gmail.com'  # e.g., samreenproject123@gmail.com
+EMAIL_HOST_PASSWORD = 'hdwg rfya wcvo eafr'  # paste the 16-char App Password here
+DEFAULT_FROM_EMAIL = 'studentsphere.noreply@gmail.com'
