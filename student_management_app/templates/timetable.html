@@ -548,7 +548,6 @@
     {% endif %}
 
    <script>
-    const userRole = "{{ user_role }}";
     const timetableData = {
         1: {},
         2: {},
@@ -630,21 +629,18 @@
                                                     <p>Room: ${slotData.room || '-'}</p>
                                                     <p>Instructor: ${slotData.instructor || '-'}</p>`;
                             cell.appendChild(detailsDiv);
-                        //  
-                        }  
-                        if (slotData) {
-                            if (userRole === 'admin') {
-                                cell.addEventListener('click', () => openEditSlotModal(day, time, slotData));
-                            }
+                            {% if user_role == 'admin' %}
+                            cell.addEventListener('click', () => openEditSlotModal(day, time, slotData));
+                            {% endif %}
                         } else {
-                            if (userRole === 'admin') {
-                                cell.addEventListener('click', () => openAddSlotModal(day, time));
-                            }
+                            {% if user_role == 'admin' %}
+                            cell.addEventListener('click', () => openAddSlotModal(day, time));
+                            {% endif %}
                         }
                         dataRow.appendChild(cell);
-                        });
-                        tbody.appendChild(dataRow);
-                        });
+                    });
+                    tbody.appendChild(dataRow);
+                });
 
                 table.appendChild(tbody);
                 timetableContainer.appendChild(table);
